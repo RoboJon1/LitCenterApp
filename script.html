@@ -1,0 +1,164 @@
+<script>
+let resultsDiv = document.getElementById("results");
+let advancedSearchEnabled = false;
+
+function loadPeriod() {
+  let day = document.forms["selector-panel"]["DOTW"].value;
+  let period = document.forms["selector-panel"]["POTD"].value;
+  let subject = advancedSearchEnabled ? document.forms["selector-panel"]["Subject-select"].value : "Any";
+  
+  const root = document.getElementById('results');
+  root.innerHTML = "Loading...";
+  /*
+  resultsDiv.textContent = "";
+  let fillerResult = document.createElement("p");
+  fillerResult.textContent = day + " Period " + period;
+  resultsDiv.appendChild(fillerResult);
+
+  var important = day + " " + period;
+  console.log(important);
+
+  */
+  google.script.run.withSuccessHandler((results) => {
+    createTutorBarAndDropdown(results);
+  }).fetchStudents(day, period);
+  
+  return false;
+}
+
+/* START CODE IDENTICAL TO REPLIT */
+
+// Function to initialize the page
+function init() {
+  // Attach event listener to the form submit event
+  document.getElementById("selector-panel").onsubmit = loadPeriod;
+}
+
+// Call the function to initialize the page
+window.onload = function () {
+  init();
+};
+
+function toggleDropdownOnclick(element) {
+  return function () {
+    element.classList.toggle("show");
+  };
+}
+
+function createTutorBarAndDropdown(tutorInformation) {
+  //console.log(tutorInformation);
+  let day = document.forms["selector-panel"]["DOTW"].value;
+  let period = document.forms["selector-panel"]["POTD"].value;
+
+  const root = document.getElementById("results");
+
+  // Clear the root element first to prevent multiple creations
+  root.innerHTML = "";
+
+  const subjectMasterList = [
+    "Math",
+    "Science",
+    "Social Studies",
+    "English",
+    "Other",
+  ];
+
+  if (tutorInformation.length == 0) {
+    root.innerHTML = "No results found";
+    return;
+  }
+
+  tutorInformation.forEach((tutor) => {
+    // Create the tutorBar and its child divs
+    let subjectListOffset = 4;
+
+    let subject = advancedSearchEnabled ? document.forms["selector-panel"]["Subject-select"].value : "Any";
+    
+    if (subject !== "Any") {
+      let containsSubject = false;
+      for(let i = 0; i < subjectMasterList.length; i++) {
+        if(subject == subjectMasterList[i] && tutor[i+subjectListOffset] !== "") {
+          containsSubject = true;
+        }
+      }
+      if(!containsSubject) {
+        return;
+      }
+    }
+
+    const tutorBar = document.createElement("div");
+    tutorBar.className = "tutor";
+    const subjects = tutor.slice(2);
+
+    const nameDiv = document.createElement("div");
+    nameDiv.textContent = tutor[0] + " " + tutor[1];
+    tutorBar.appendChild(nameDiv);
+
+    for (let i = 0; i < subjectMasterList.length; i++) {
+      const categoryDiv = document.createElement("div");
+      categoryDiv.textContent =
+        subjectMasterList[i] + (tutor[i + subjectListOffset] !== "" ? "✔" : "✖");
+      tutorBar.appendChild(categoryDiv);
+    }
+
+    // Create the tutorDropdown and its child divs
+    const tutorDropdown = document.createElement("div");
+    tutorDropdown.className = "dropdown";
+
+    const scheduleDiv = document.createElement("div");
+    scheduleDiv.className = "subjectDropdown";
+    const availableDays = subjects.shift().split(", ");
+    availableDays.forEach((day) => {
+      const dayText = document.createElement("p");
+      dayText.textContent = day;
+      scheduleDiv.appendChild(dayText);
+    });
+    const periodsText = document.createElement("p");
+    periodsText.textContent = subjects.shift();
+    scheduleDiv.appendChild(periodsText);
+    tutorDropdown.appendChild(scheduleDiv);
+
+    subjects.forEach((subject) => {
+      const courseDiv = document.createElement("div");
+      courseDiv.className = "subjectDropdown";
+      const courses = subject.split(", ");
+      courses.forEach((course) => {
+        const courseText = document.createElement("p");
+        courseText.textContent = course;
+        courseDiv.appendChild(courseText);
+      });
+      tutorDropdown.appendChild(courseDiv);
+    });
+
+    // Append both the tutorBar and tutorDropdown to the root element
+    let tutorResult = document.createElement("div");
+    tutorResult.className = "tutorResult";
+    tutorResult.appendChild(tutorBar);
+    tutorResult.appendChild(tutorDropdown);
+    root.appendChild(tutorResult);
+
+    // Event listener to toggle the visibility of the tutorDropdown
+    tutorBar.addEventListener("click", function () {
+      tutorDropdown.style.display =
+        tutorDropdown.style.display === "grid" ? "none" : "grid";
+    });
+  });
+}
+
+function toggleAdvancedSearch() {
+  advancedSearchEnabled = !advancedSearchEnabled;
+  let advancedSearchElements = document.querySelectorAll(".advanced-option");
+  if (advancedSearchEnabled) {
+    advancedSearchElements.forEach((element) => {
+      element.classList.remove("hidden");
+    });
+  } else {
+    advancedSearchElements.forEach((element) => {
+      element.classList.add("hidden");
+    });
+  }
+}
+
+/* START CODE IDENTICAL TO REPLIT */
+
+</script>

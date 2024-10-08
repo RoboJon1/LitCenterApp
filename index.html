@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- This Code is Dedicated to Your Mother -->
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Drag & Drop Using JavaScript - Easy Tutorials</title>
+    <!--<link href="style.css" rel="stylesheet" type="text/css" />-->
+    <?!= include('style.html') ?>
+  </head>
+  <body class="box" id="body">
+  <!-- START CODE IDENTICAL TO REPLIT -->
+    <div id="logo">
+      <a href="https://www.nwlitcenter.org/" target=”_blank”><img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZl1GkMIzhTBN3WryNvyqmSBgFVxGF86RqTGf6R4vlxbNaEWlO5FPtZkfoA7mgpMcz9KbIJVr0y97cETf1_FD5hO8es4RniEA=w1920-h1075"></img></a>
+    </div>
+    <form id="selector-panel" onsubmit="return false">
+      <span class="menu-option">
+        <label for="Day Of The Week">Choose A Day:</label>
+        <div class="select-wrapper">
+          <select name="Day Of The Week" id="DOTW" class="dropbtn">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Any" class="advanced-option hidden">Any</option>
+          </select>
+        </div>
+      </span>
+
+      <span class="menu-option">
+        <label for="Period of the day">Choose A Period:</label>
+        <div class="select-wrapper">
+          <select name="Period of the day" id="POTD" class="dropbtn">
+            <option value="EB">Early Bird</option>
+            <option value="1">1st Period</option>
+            <option value="2">2nd Period</option>
+            <option value="3">3rd Period</option>
+            <option value="4">4th Period</option>
+            <option value="5">5th Period</option>
+            <option value="6">6th Period</option>
+            <option value="7">7th Period</option>
+            <option value="8">8th Period</option>
+            <option value="9">9th Period</option>
+            <option value="AS">After School</option>
+            <option value="Any" class="advanced-option hidden">Any</option>
+          </select>
+        </div>
+      </span>
+
+      <span class="menu-option advanced-option hidden">
+        <label for="Subject">Select a subject: </label>
+        <div class="select-wrapper">
+          <select name="Subject" id="Subject-select" class="dropbtn">
+            <option value="Math">Math</option>
+            <option value="Science">Science</option>
+            <option value="English">English</option>
+            <option value="Social Studies">Social Studies</option>
+            <option value="Other">Other</option>
+            <option value="Any">Any</option>
+          </select>
+        </div>
+      </span>
+
+      <input type="submit" name="submit" id="submit-button" class="button" onclick="loadPeriod()">
+    </form>
+
+    <div id="results"></div>
+    <div id="URMOM"></div>
+
+    <div id="footer">
+      <span class="menu-option">
+        <button class="button" id="advanced-search" onclick="toggleAdvancedSearch()">Toggle Advanced Search</button>
+      </span>
+    </div>
+    <!-- END CODE IDENTICAL TO REPLIT -->
+    
+    <!--<script src="script.js"></script>-->
+    <?!= include('script.html') ?>
+  </body>
+</html>
